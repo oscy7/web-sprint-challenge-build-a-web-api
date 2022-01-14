@@ -67,4 +67,25 @@ router.put('/:id', (req, res) => {
       })
   })
 
+router.delete('/:id', async (req, res) => {
+    try {
+        const action = await Acts.remove(req.params.id)
+        if (!action) {
+            res.status(404).json({
+                message: 'The action with the specified ID does not exist',
+            })
+        } else {
+            await Acts.remove(req.params.id)
+            res.json(action)
+            
+        }
+    } catch (err) {
+        res.status(500).json({
+            message:'The action could not be removed',
+            err: err.message,
+            stack: err.stack
+        })
+    }
+})
+
 module.exports = router
