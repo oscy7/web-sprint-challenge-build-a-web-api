@@ -2,6 +2,7 @@
 const express = require('express')
 const router = express.Router()
 const Project = require('./projects-model')
+const { validateId } = require('./projects-middleware')
 
 router.get('/', (req, res) => {
     Project.get()
@@ -67,7 +68,7 @@ router.put('/:id', (req, res) => {
       })
   })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id',validateId, async (req, res, next) => {
     try {
         const project = await Project.remove(req.params.id)
         if (!project) {
@@ -80,11 +81,7 @@ router.delete('/:id', async (req, res) => {
             
         }
     } catch (err) {
-        res.status(500).json({
-            message:'The project could not be removed',
-            err: err.message,
-            stack: err.stack
-        })
+        next(err)
     }
 })
 

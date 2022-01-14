@@ -2,6 +2,7 @@
 const express = require('express')
 const router = express.Router()
 const Acts = require('./actions-model')
+const { validateActionId } = require('./actions-middlware')
 
 router.get('/', (req, res) => {
     Acts.get()
@@ -17,24 +18,21 @@ router.get('/', (req, res) => {
         })
 })
 
-router.get('/:id', async (req, res) => {
-    try {
-        const action = await Acts.get(req.params.id)
-        if(!action) {
-            res.status(404).json({
-                message:'The action does not exist'
-            })
-        }else{
-            res.json(action)
-        }
-    }catch (err) {
-        res.status(500).json({
-            message:"The action information could not be retrieved",
-            err:err.message,
-            stack: err.stack
-        })
-    }
+router.get('/:id', validateActionId, async (req, res, next) => {
+  try {
+      const action = await Acts.get(req.params.id)
+      if(!action) {
+          res.status(404).json({
+              message:'The action does not exist'
+          })
+      }else{
+          res.json(action)
+      }
+  }catch (err) {
+      next(err)
+  } 
 })
+
 
 router.post('/', (req, res) => {
     Acts.insert(req.body)
