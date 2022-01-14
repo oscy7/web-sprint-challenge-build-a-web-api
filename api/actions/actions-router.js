@@ -36,4 +36,35 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+router.post('/', (req, res) => {
+    Acts.insert(req.body)
+      .then(actions => {
+        res.status(201).json(actions)
+      })
+      .catch(error => {
+        console.log(error)
+        res.status(400).json({
+          message: 'Error adding the action',
+        })
+      })
+  })
+
+router.put('/:id', (req, res) => {
+    const changes = req.body
+    Acts.update(req.params.id, changes)
+      .then(actions => {
+        if (actions) {
+          res.status(400).json(actions)
+        } else {
+          res.status(404).json({ message: 'The actions could not be found' })
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        res.status(400).json({
+          message: 'Error updating the action',
+        })
+      })
+  })
+
 module.exports = router

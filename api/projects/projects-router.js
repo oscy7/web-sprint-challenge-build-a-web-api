@@ -16,6 +16,7 @@ router.get('/', (req, res) => {
             })
         })
 })
+
 router.get('/:id', async (req, res) => {
     try {
         const project = await Project.get(req.params.id)
@@ -34,5 +35,36 @@ router.get('/:id', async (req, res) => {
         })
     }
 })
+
+router.post('/', (req, res) => {
+    Project.insert(req.body)
+      .then(project => {
+        res.status(201).json(project)
+      })
+      .catch(error => {
+        console.log(error)
+        res.status(400).json({
+          message: 'Error adding the project',
+        })
+      })
+  })
+
+router.put('/:id', (req, res) => {
+    const changes = req.body
+    Project.update(req.params.id, changes)
+      .then(project => {
+        if (project) {
+          res.status(400).json(project)
+        } else {
+          res.status(404).json({ message: 'The project could not be found' })
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        res.status(400).json({
+          message: 'Error updating the project',
+        })
+      })
+  })
 
 module.exports = router
