@@ -147,7 +147,26 @@ We have provided test data for all the resources.
 Be prepared to demonstrate your understanding of this week's concepts by answering questions on the following topics. You might prepare by writing down your own answers before hand.
 
 1. The core features of Node.js and Express and why they are useful.
+
+Core features of Node.js include: 
+Being asynchronous, which allows us to take full advantage of the processor. 
+Uses Javascript, which helps minimizes context switching when building a full stack application
+Javascript is single threaded, which is better than being multi threaded
+Gives us access to npm. This gives us access to a massive library for our toolkit.
+
+Corefeatures of Express: 
+Gives us access to middleware, which allows us to get requests and responses, operate on them and ultimately cause some kind of action.
+Gives us the ability to Route. Routing is a way to selecting a request handler so that we are able to perform specific http methods.
+We are able to break up applications into routers and convenience helpers, which provide out of hte box functionality. 
+
 1. Understand and explain the use of Middleware.
+
 1. The basic principles of the REST architectural style.
+REST is a set of principles thats helps us design and distribute software. 
+Everything is a resource that is accessible through a URI. It can have many representations and everything communicates and managed via stateless protocols and HTTP methods. 
+
 1. Understand and explain the use of Express Routers.
+Express Routers helps us break a lot of code into smaller bits or sub applications. It helps readability and helps us create router handlers so that we can respond to HTTP methods.
+
 1. Describe tooling used to manually test the correctness of an API.
+I like to use Postman which is a piece of software where a person is able to test methods like .get .put .delete and many others. It is important to test one's code so that we dont throw a bunch of code, hope it works and deal with errors later. It is best to code bit by bit and test those bits with postman so that our APIs do indeed work.
